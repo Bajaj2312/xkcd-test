@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['verification_code']))
     if (isset($_SESSION['verification_code']) && $_POST['verification_code'] === $_SESSION['verification_code']) {
         if (registerEmail($_SESSION['verification_email'])) {
             $message = "Success! You are now subscribed to daily XKCD comics.";
-            // Clear session variables after successful registration
+
             unset($_SESSION['verification_email']);
             unset($_SESSION['verification_code']);
         } else {

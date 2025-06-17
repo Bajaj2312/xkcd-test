@@ -19,13 +19,11 @@ function sendVerificationEmail(string $email, string $code, bool $isUnsubscribe 
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
     $headers .= 'From: no-reply@example.com' . "\r\n";
 
-    // The mail() function requires a configured mail server (e.g., Mailpit) to work.
+
     return mail($email, $subject, $body, $headers);
 }
 
-/**
- * Register an email by storing it in the file.
- */
+
 function registerEmail(string $email): bool {
     $file = __DIR__ . '/registered_emails.txt';
     $emails = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
@@ -35,14 +33,12 @@ function registerEmail(string $email): bool {
     return true; // Email is already registered
 }
 
-/**
- * Unsubscribe an email by removing it from the file.
- */
+
 function unsubscribeEmail(string $email): bool {
     $file = __DIR__ . '/registered_emails.txt';
     $emails = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
-    // Create a new array without the email to be removed
+   
     $new_emails = array_filter($emails, function($e) use ($email) {
         return trim($e) !== trim($email);
     });
@@ -51,12 +47,10 @@ function unsubscribeEmail(string $email): bool {
     return file_put_contents($file, implode(PHP_EOL, $new_emails) . PHP_EOL, LOCK_EX) !== false;
 }
 
-/**
- * Fetch a random XKCD comic and format its data as HTML.
- */
+
 function fetchAndFormatXKCDData(): ?string {
-    // Fetch the latest comic to find the max ID number
-    $latest_comic_json = @file_get_contents('https://xkcd.com/info.0.json');
+
+  $latest_comic_json = @file_get_contents('https://xkcd.com/info.0.json');
     if ($latest_comic_json === false) {
         return null; // Could not fetch latest comic info
     }
@@ -67,7 +61,7 @@ function fetchAndFormatXKCDData(): ?string {
     $random_id = rand(1, $max_comic_id);
     $comic_url = "https://xkcd.com/{$random_id}/info.0.json";
 
-    // Fetch the random comic's data
+
     $comic_json = @file_get_contents($comic_url);
     if ($comic_json === false) {
         return null; // Could not fetch random comic
@@ -85,9 +79,7 @@ function fetchAndFormatXKCDData(): ?string {
     return $html;
 }
 
-/**
- * Send the formatted XKCD updates to all registered emails.
- */
+
 function sendXKCDUpdatesToSubscribers(): void {
     $file = __DIR__ . '/registered_emails.txt';
     if (!file_exists($file)) {

@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['verification_code']))
     if (isset($_SESSION['unsubscribe_code']) && $_POST['verification_code'] === $_SESSION['unsubscribe_code']) {
         if (unsubscribeEmail($_SESSION['unsubscribe_email'])) {
             $message = "You have been successfully unsubscribed.";
-            // Clear session variables
+
             unset($_SESSION['unsubscribe_email']);
             unset($_SESSION['unsubscribe_code']);
         } else {
