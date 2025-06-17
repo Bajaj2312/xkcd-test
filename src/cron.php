@@ -1,4 +1,6 @@
 <?php
-require_once 'functions.php';
-// This script should send XKCD updates to all registered emails.
-// You need to implement this functionality.
+// This script is intended to be run by a CRON job.
+// It will send the daily XKCD comic to all subscribers.
+require_once __DIR__ . '/functions.php';
+
+sendXKCDUpdatesToSubscribers();
