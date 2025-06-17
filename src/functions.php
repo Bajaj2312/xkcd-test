@@ -1,15 +1,11 @@
 <?php
 
-/**
- * Generate a 6-digit numeric verification code.
- */
+
 function generateVerificationCode(): string {
     return str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
 }
 
-/**
- * Send a verification or unsubscription email.
- */
+
 function sendVerificationEmail(string $email, string $code, bool $isUnsubscribe = false): bool {
     if ($isUnsubscribe) {
         $subject = 'Confirm Un-subscription';
